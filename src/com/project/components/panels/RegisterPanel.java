@@ -2,27 +2,30 @@ package com.project.components.panels;
 
 import com.project.commons.Memory;
 import com.project.components.HexTextField;
+import com.project.utils.HexParser;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
-public class RegisterPanel extends JPanel{
+public class RegisterPanel extends JPanel {
     int padding = 10;
     Border paddingBorder = BorderFactory.createEmptyBorder(padding, padding, padding, padding);
     Memory memory = Memory.getInstance();
     static JTextField pc = new HexTextField(3);
     static JTextField mbr = new HexTextField(4);
-    static JTextField mar = new HexTextField(4);
+    static JTextField mar = new HexTextField(3);
     static JButton btnMbr = new JButton("LD");
     static JButton btnMar = new JButton("LD");
     static JButton btnPc = new JButton("LD");
 
+    public static void incrementPC() {
+        String newPC = HexParser.inttoHexString(Integer.parseInt(pc.getText(), 16)+1, 3);
+        pc.setText(newPC);
+    }
 
 
-
-
-    public RegisterPanel(Color bgcolor){
+    public RegisterPanel(Color bgcolor) {
 
         this.setLayout(new GridLayout(3, 3));
         Border gentitledBorder = BorderFactory.createTitledBorder("Register Panel");
@@ -48,13 +51,11 @@ public class RegisterPanel extends JPanel{
         mar.setText("000");
         this.add(mar);
         btnMar.addActionListener(ae -> {
-            String marAddress = mar.getText();
-            String mbrval =  memory.getValue(marAddress);
+            String marAddress = String.format("%" + 4 + "s", mar.getText()).replace(' ', '0');
+            String mbrval = memory.getValue(marAddress);
             mbr.setText(mbrval);
         });
         this.add(btnMar);
-
-
 
 
     }

@@ -15,6 +15,12 @@ public class HexParser {
         // Use String.format to left-pad with zeros
         return String.format("%" + desiredLength + "s", input).replace(' ', '0');
     }
+    public static String inttoHexString(int x, int desiredLength) {
+        String input = Integer.toHexString(x).toUpperCase(); // The input string
+         // The desired length of the padded string
+        // Use String.format to left-pad with zeros
+        return String.format("%" + desiredLength + "s", input).replace(' ', '0');
+    }
     public static boolean isAllowedHex(char c) {
         char[] charArray = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e','f'};
         for (char chr:

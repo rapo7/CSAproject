@@ -2,16 +2,20 @@ package com.project.components.panels;
 
 import com.project.commons.Memory;
 import com.project.components.BinTextField;
+import com.project.components.PopupHandler;
 import com.project.instructions.InstructionParser;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ControlPanel extends JPanel {
     Border paddingBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+    static JProgressBar progressBar = new JProgressBar();
 
-    public ControlPanel(Color bgcolor) {
+    public ControlPanel(Color bgcolor, JFrame frame) {
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         Border controltitledBorder = BorderFactory.createTitledBorder("Control Panel");
         Border controlcompoundBorder = BorderFactory.createCompoundBorder(controltitledBorder, paddingBorder);
@@ -51,10 +55,14 @@ public class ControlPanel extends JPanel {
         JButton storeButton = new JButton("Store");
 //        JButton stPlusButton = new JButton("St+");
         JButton loadButton = new JButton("Load");
-        JButton initButton = new JButton("Init");
+        JButton initButton = new JButton("init");
+        PopupHandler popup = new PopupHandler(frame);
+
         initButton.addActionListener(ae -> {
-            Memory.loadMemory();
+            popup.showPopup();
         });
+
+        this.add(initButton);
 
         // Text field for SS
         this.add(new JLabel("SS"));
@@ -71,6 +79,7 @@ public class ControlPanel extends JPanel {
             String address = addressTextField.getText();
 
             InstructionParser.parse(opcode, reg, ireg, ibit, address);
+            RegisterPanel.incrementPC();
         });
 
 
@@ -89,3 +98,6 @@ public class ControlPanel extends JPanel {
         this.add(runCheckBox);
     }
 }
+
+
+

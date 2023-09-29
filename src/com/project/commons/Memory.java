@@ -41,7 +41,8 @@ public class Memory {
 
 
 
-    public static void loadMemory() {
+    public static boolean loadMemory() {
+
         String currentDirectory = System.getProperty("user.dir");
         Path filePath = Paths.get(currentDirectory + "/IPL.txt");
 
@@ -61,9 +62,12 @@ public class Memory {
                     System.err.println("Invalid line in IPL.txt: " + line);
                 }
             }
+            return true;
         } catch (IOException e) {
             System.out.println("IPL File not found");
+            return false;
         }
+
     }
 }
 

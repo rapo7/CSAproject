@@ -78,7 +78,7 @@ public class MainScreen extends JFrame {
 
 
         // Create the bottom panel with FlowLayout
-        JPanel bottomPanel = new ControlPanel(paleYellowColor);
+        JPanel bottomPanel = new ControlPanel(paleYellowColor, this);
 
         // Add the top padding, main panel, and bottom panel to the JFrame
         add(topPaddingPanel, BorderLayout.NORTH);
