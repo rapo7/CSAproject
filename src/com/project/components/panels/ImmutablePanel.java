@@ -10,27 +10,27 @@ public class ImmutablePanel extends JPanel {
     int padding = 10;
     Border paddingBorder = BorderFactory.createEmptyBorder(padding, padding, padding, padding);
     JLabel irLabel = new JLabel("IR");
-    JTextField ir = new HexTextField(4);
+    static JTextField ir = new HexTextField(4);
     JLabel mfrLabel = new JLabel("MFR ");
 
-    public String getIr() {
+    public static String getIr() {
         return ir.getText();
     }
 
-    public void setIr(String ins) {
+    public static  void setIr(String ins) {
         ir.setText(ins);
     }
 
-    public String getMfr() {
+    public static String getMfr() {
         return mfr.getText();
     }
 
-    public void setMfr(String memoryfr) {
-        this.mfr.setText(memoryfr);
+    public static void setMfr(String memoryfr) {
+        mfr.setText(memoryfr);
     }
 
 
-    JTextField mfr = new HexTextField(1);
+    static JTextField mfr = new HexTextField(1);
 
 
     public ImmutablePanel(Color bgcolor) {

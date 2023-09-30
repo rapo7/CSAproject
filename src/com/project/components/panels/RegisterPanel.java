@@ -6,12 +6,14 @@ import com.project.utils.HexParser;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 public class RegisterPanel extends JPanel {
     int padding = 10;
     Border paddingBorder = BorderFactory.createEmptyBorder(padding, padding, padding, padding);
-    Memory memory = Memory.getInstance();
+    static Memory memory = Memory.getInstance();
     static JTextField pc = new HexTextField(3);
     static JTextField mbr = new HexTextField(4);
     static JTextField mar = new HexTextField(3);
@@ -20,8 +22,15 @@ public class RegisterPanel extends JPanel {
     static JButton btnPc = new JButton("LD");
 
     public static void incrementPC() {
-        String newPC = HexParser.inttoHexString(Integer.parseInt(pc.getText(), 16)+1, 3);
+        int marVal = Integer.parseInt(pc.getText(), 16);
+        String newPC = HexParser.inttoHexString(marVal + 1 , 3);
+        String newMAR =   HexParser.inttoHexString(marVal, 3);
+        String newMBR = memory.getValue(newMAR);
         pc.setText(newPC);
+        mar.setText(newMAR);
+        mbr.setText(newMBR);
+
+        ImmutablePanel.setIr(newMBR);
     }
 
 
@@ -36,6 +45,7 @@ public class RegisterPanel extends JPanel {
         // Add PC text field and label
         this.add(new JLabel("PC "));
         pc.setText("000");
+        pc.setEditable(false);
         this.add(pc);
         this.add(btnPc);
 
@@ -43,17 +53,18 @@ public class RegisterPanel extends JPanel {
         //Add MBR text field and label
         this.add(new JLabel("MBR "));
         mbr.setText("0000");
+        mbr.setEditable(false);
         this.add(mbr);
         this.add(btnMbr);
 
         //Add MAR text field and label
         this.add(new JLabel("MAR "));
-        mar.setText("000");
+        mar.setText("001");
+        mar.setEditable(false);
         this.add(mar);
+
         btnMar.addActionListener(ae -> {
-            String marAddress = String.format("%" + 4 + "s", mar.getText()).replace(' ', '0');
-            String mbrval = memory.getValue(marAddress);
-            mbr.setText(mbrval);
+            System.out.println(ae.getActionCommand());
         });
         this.add(btnMar);
 

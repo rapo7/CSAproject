@@ -31,14 +31,17 @@ public class Memory {
 
     // Methods to read and write to registerMap
     public String getValue(String address) {
-        return memoryMap.get(address);
+        if (address.length() == 4)
+            return memoryMap.get(address);
+        else
+            return memoryMap.get("0" + address);
+
     }
 
     public void setValue(String address, String value) {
         memoryMap.put(address, value);
         System.out.println("Memory -- location" + address + "set to --" + value);
     }
-
 
 
     public static boolean loadMemory() {

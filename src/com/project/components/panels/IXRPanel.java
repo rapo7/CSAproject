@@ -56,13 +56,16 @@ public class IXRPanel extends JPanel {
         ixr1textField.setText("0000");
         ixr2textField.setText("0000");
         ixr3textField.setText("0000");
+        ixr1textField.setEditable(false);
+        ixr2textField.setEditable(false);
+        ixr3textField.setEditable(false);
+
 
 
 
 
         ixr1btn.addActionListener(ae -> {
-            String ixr1textFieldValue = ixr1textField.getText();
-            regmap.setValue("IXR1", ixr1textFieldValue);
+            ixr1textField.setText(regmap.getValue("IXR1"));
             regmap.printRegisters();
         });
         this.add(ixr1label);
@@ -71,8 +74,7 @@ public class IXRPanel extends JPanel {
 
 
         ixr2btn.addActionListener(ae -> {
-            String ixr2textFieldValue = ixr2textField.getText();
-            regmap.setValue("IXR2", ixr2textFieldValue);
+            ixr2textField.setText(regmap.getValue("IXR2"));
             regmap.printRegisters();
         });
         this.add(ixr2label);
@@ -81,8 +83,7 @@ public class IXRPanel extends JPanel {
 
 
         ixr3btn.addActionListener(ae -> {
-            String ixr3textFieldValue = ixr3textField.getText();
-            regmap.setValue("IXR3", ixr3textFieldValue);
+            ixr3textField.setText(regmap.getValue("IXR3"));
             regmap.printRegisters();
         });
         this.add(ixr3label);

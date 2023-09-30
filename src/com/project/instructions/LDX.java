@@ -10,11 +10,11 @@ public class LDX {
 
     public static void execute(Memory memory, String indReg, String EA) {
         String val = memory.getValue(EA);
+        System.out.println(val);
         switch (indReg) {
             case "01":
                 System.out.println("index 1");
                 regmap.setValue("IXR1", val);
-                IXRPanel.setIxr1textField(val);
                 break;
             case "10":
                 System.out.println("index 2");
@@ -27,7 +27,6 @@ public class LDX {
                 IXRPanel.setIxr3textField(val);
                 break;
             default:
-                System.out.println("index 2");
                 System.out.println("NOT A VALID value for IX");
                 break;
 

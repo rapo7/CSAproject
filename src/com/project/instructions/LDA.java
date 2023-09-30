@@ -12,7 +12,7 @@ public class LDA {
             case "00":
                 System.out.println("GPR0 setting");
                 regmap.setValue("GPR0", EA);
-                GPRPanel.setGpr0textField(EA);
+//                GPRPanel.setGpr0textField(EA);
                 break;
             case "01":
                 regmap.setValue("GPR1", EA);

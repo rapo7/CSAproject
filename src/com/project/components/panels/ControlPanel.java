@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 
 public class ControlPanel extends JPanel {
     Border paddingBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-    static JProgressBar progressBar = new JProgressBar();
 
     public ControlPanel(Color bgcolor, JFrame frame) {
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -56,6 +55,7 @@ public class ControlPanel extends JPanel {
 //        JButton stPlusButton = new JButton("St+");
         JButton loadButton = new JButton("Load");
         JButton initButton = new JButton("init");
+        initButton.setBackground(Color.RED);
         PopupHandler popup = new PopupHandler(frame);
 
         initButton.addActionListener(ae -> {
@@ -65,9 +65,18 @@ public class ControlPanel extends JPanel {
         this.add(initButton);
 
         // Text field for SS
-        this.add(new JLabel("SS"));
-        JTextField ssTextField = new BinTextField(1);
-        this.add(ssTextField);
+        JButton ssButton = new JButton("SS");
+        ssButton.addActionListener(ae -> {
+            String opcode = operationText.getText();
+            String reg = gprTextField.getText();
+            String ireg = ixrTextField.getText();
+            String ibit = iTextField.getText();
+            String address = addressTextField.getText();
+            InstructionParser.parse(opcode, reg, ireg, ibit, address);
+            RegisterPanel.incrementPC();
+        });
+        this.add(ssButton);
+
 
         // Button for Run
         JButton runButton = new JButton("Run");

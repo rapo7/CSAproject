@@ -63,11 +63,11 @@ public class PopupHandler {
                         if (condition) {
                             progressBar.setValue(100);
                             progressDialog.dispose();
-                            JOptionPane.showMessageDialog(parentFrame, "Task completed successfully!",
+                            JOptionPane.showMessageDialog(parentFrame, "Memory is loaded with IPL Successfully",
                                     "Success", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             progressDialog.dispose();
-                            JOptionPane.showMessageDialog(parentFrame, "Error occurred during the task!",
+                            JOptionPane.showMessageDialog(parentFrame, "Error occurred during loading memory",
                                     "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     } catch (Exception ex) {
