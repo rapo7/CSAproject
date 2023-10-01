@@ -110,8 +110,8 @@ public class ControlPanel extends JPanel {
         // Text field for SS
         JButton ssButton = new JButton("SS");
         ssButton.addActionListener(ae -> {
-            InstructionParser.fromIR(ImmutablePanel.getIr());
             RegisterPanel.incrementPC();
+            InstructionParser.fromIR(ImmutablePanel.getIr());
         });
         this.add(ssButton);
 
