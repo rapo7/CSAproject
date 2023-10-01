@@ -6,8 +6,6 @@ import com.project.utils.HexParser;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 public class RegisterPanel extends JPanel {
@@ -20,6 +18,24 @@ public class RegisterPanel extends JPanel {
     static JButton btnMbr = new JButton("LD");
     static JButton btnMar = new JButton("LD");
     static JButton btnPc = new JButton("LD");
+
+    public static String getMAR(){
+        return mar.getText();
+    }
+    public  static String getMBR(){
+        return mbr.getText();
+    }
+    public static void setMBR(String text){
+        mbr.setText(text);
+    }
+    public static void setMAR(String text){
+        mar.setText(text);
+    }
+
+
+
+
+
 
     public static void incrementPC() {
         int marVal = Integer.parseInt(pc.getText(), 16);
@@ -59,12 +75,21 @@ public class RegisterPanel extends JPanel {
 
         //Add MAR text field and label
         this.add(new JLabel("MAR "));
-        mar.setText("001");
+        mar.setText("000");
         mar.setEditable(false);
         this.add(mar);
+        btnMbr.addActionListener(ae -> {
+            String RegisterVal = InputPanel.getRegisterInput();
+            mbr.setText(RegisterVal);
+        });
+        btnPc.addActionListener(ae -> {
+            String addressVal = InputPanel.getAddressInput();
+            pc.setText(addressVal);
+        });
 
         btnMar.addActionListener(ae -> {
-            System.out.println(ae.getActionCommand());
+            String addressVal = InputPanel.getAddressInput();
+            mar.setText(addressVal);
         });
         this.add(btnMar);
 

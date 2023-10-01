@@ -28,6 +28,7 @@ public class GPRPanel extends JPanel {
 
 
     public static void setGpr0textField(String text) {
+
         gpr0textField.setText(text);
     }
 
@@ -62,8 +63,9 @@ public class GPRPanel extends JPanel {
         gpr3textField.setEditable(false);
 
         gpr0btn.addActionListener(ae -> {
-            gpr0textField.setText(regmap.getValue("GPR0"));
-            regmap.printRegisters();
+            String regInput = InputPanel.getRegisterInput();
+            regmap.setValue("GPR0", regInput);
+            gpr0textField.setText(regInput);
         });
 
 
@@ -73,7 +75,9 @@ public class GPRPanel extends JPanel {
 
 
         gpr1btn.addActionListener(ae -> {
-            gpr1textField.setText(regmap.getValue("GPR1"));
+            String regInput = InputPanel.getRegisterInput();
+            regmap.setValue("GPR1", regInput);
+            gpr1textField.setText(regInput);
         });
         this.add(gpr1label);
         this.add(gpr1textField);
@@ -81,7 +85,9 @@ public class GPRPanel extends JPanel {
 
 
         gpr2btn.addActionListener(ae -> {
-            gpr2textField.setText(regmap.getValue("GPR2"));
+            String regInput = InputPanel.getRegisterInput();
+            regmap.setValue("GPR2", regInput);
+            gpr2textField.setText(regInput);
         });
         this.add(gpr2label);
         this.add(gpr2textField);
@@ -89,7 +95,9 @@ public class GPRPanel extends JPanel {
 
 
         gpr3btn.addActionListener(ae -> {
-            gpr3textField.setText(regmap.getValue("GPR3"));
+            String regInput = InputPanel.getRegisterInput();
+            regmap.setValue("GPR3", regInput);
+            gpr3textField.setText(regInput);
         });
         this.add(gpr3label);
         this.add(gpr3textField);

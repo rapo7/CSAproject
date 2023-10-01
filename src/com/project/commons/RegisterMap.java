@@ -7,7 +7,7 @@ public class RegisterMap {
     private static RegisterMap instance = null;
     private static Map<String, String> regMap;
 
-    private static String[] registers = {"GPR0", "GPR1", "GPR2", "GPR3", "IXR1", "IXR2", "IXR3"};
+    private static final String[] registers = {"GPR0", "GPR1", "GPR2", "GPR3", "IXR1", "IXR2", "IXR3"};
 
     // Private constructor to prevent external instantiation
     private  RegisterMap() {

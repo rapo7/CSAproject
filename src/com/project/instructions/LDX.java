@@ -15,6 +15,7 @@ public class LDX {
             case "01":
                 System.out.println("index 1");
                 regmap.setValue("IXR1", val);
+                IXRPanel.setIxr1textField(val);
                 break;
             case "10":
                 System.out.println("index 2");

@@ -18,7 +18,7 @@ public class Memory {
     private Memory() {
         memoryMap = new HashMap<>();
         for (int i = 0; i < Constants.MEMORY_BOUND; i++) {
-            memoryMap.put(HexParser.inttoHexString(i), "FFFF");
+            memoryMap.put(HexParser.inttoHexString(i), "0000");
         }
     }
 

@@ -65,14 +65,17 @@ public class MainScreen extends JFrame {
         JPanel regPanel = new RegisterPanel(accentColor);
         gbc.gridx = 1;
         gbc.gridy = 0;
-        gbc.gridheight = 1; // Span two rows
         mainPanel.add(regPanel, gbc);
 
         JPanel immutablePanel = new ImmutablePanel(pink);
         gbc.gridx = 1;
         gbc.gridy = 1;
-        gbc.gridheight = 1; // Span two rows
         mainPanel.add(immutablePanel, gbc);
+
+        JPanel inputPanel = new InputPanel();
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        mainPanel.add(inputPanel, gbc);
 
 
 

@@ -3,6 +3,9 @@ package com.project.utils;
 import com.project.commons.Memory;
 import com.project.commons.RegisterMap;
 
+/**
+ * This class has getEA method
+ */
 public class EffectiveAddress {
     private static RegisterMap regmap = RegisterMap.getInstance();
     private static Memory memory  = Memory.getInstance();
