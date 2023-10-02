@@ -49,7 +49,7 @@ public class PopupHandler {
                         publish(i);
                     }
 
-                    return Memory.loadMemory();
+                    return true;
                 }
 
                 @Override

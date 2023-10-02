@@ -9,7 +9,10 @@ import com.project.utils.HexParser;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 /**
  * The ControlPanel Class has all the buttons necessary to control the machine
@@ -24,7 +27,7 @@ public class ControlPanel extends JPanel {
     static JTextField ixrTextField = new BinTextField(2);
     static JTextField iTextField = new BinTextField(1);
     static JTextField addressTextField = new BinTextField(5);
-    static  JButton stPlusButton = new JButton("St+");
+    static JButton stPlusButton = new JButton("St+");
     static Memory memory = Memory.getInstance();
 
 
@@ -50,9 +53,6 @@ public class ControlPanel extends JPanel {
 
     MouseListener[] ml = runCheckBox.getListeners(MouseListener.class);
     MouseListener[] hml = haltCheckBox.getListeners(MouseListener.class);
-
-
-
 
 
     public ControlPanel(Color bgcolor, JFrame frame) {
@@ -107,9 +107,34 @@ public class ControlPanel extends JPanel {
         initButton.setBackground(Color.RED);
         PopupHandler popup = new PopupHandler(frame);
 
+        this.add(initButton);
         initButton.addActionListener(ae -> popup.showPopup());
 
+        JButton initCustomButton = new JButton("init Custom");
+        initButton.setBackground(Color.BLUE);
+        PopupHandler popupfile = new PopupHandler(frame);
+
         this.add(initButton);
+        this.add(initCustomButton);
+        initCustomButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+
+                // Show the file chooser dialog
+                int returnValue = fileChooser.showOpenDialog(frame);
+
+                // Check if a file was selected
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    Memory.loadMemory(selectedFile);
+                    popupfile.showPopup();
+                } else {
+                    Memory.loadMemory();
+                }
+            }
+        });
+
 
         // Text field for SS
         JButton ssButton = new JButton("SS");
@@ -125,7 +150,7 @@ public class ControlPanel extends JPanel {
         runButton.addActionListener(ae -> {
             setRun(true);
             System.out.println("run is set to true");
-            while (runCheckBox.isSelected()){
+            while (runCheckBox.isSelected()) {
                 RegisterPanel.incrementPC();
                 String irText = ImmutablePanel.getIr();
                 InstructionParser.fromIR(irText);
@@ -134,7 +159,7 @@ public class ControlPanel extends JPanel {
 
         loadButton.addActionListener(ae -> {
             String marText = RegisterPanel.getMAR();
-            RegisterPanel.setMBR( memory.getValue(marText));
+            RegisterPanel.setMBR(memory.getValue(marText));
         });
         storeButton.addActionListener(ae -> {
             memory.setValue(RegisterPanel.getMAR(), RegisterPanel.getMBR());
@@ -143,7 +168,7 @@ public class ControlPanel extends JPanel {
         stPlusButton.addActionListener(ae -> {
             String curMar = RegisterPanel.getMAR();
             memory.setValue(curMar, RegisterPanel.getMBR());
-            RegisterPanel.setMAR(HexParser.inttoHexString(Integer.parseInt(curMar, 16)+ 1, 3));
+            RegisterPanel.setMAR(HexParser.inttoHexString(Integer.parseInt(curMar, 16) + 1, 3));
         });
 
         // Add components to the bottom panel

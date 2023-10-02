@@ -1,6 +1,7 @@
 package com.project.commons;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -53,6 +54,34 @@ public class Memory {
         Path filePath = Paths.get(currentDirectory + "/IPL.txt");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toString()))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+                // Split the line into two parts using a space as the separator
+                String[] parts = line.split(" ");
+
+                if (parts.length == 2) {
+                    String part1 = parts[0];
+                    String part2 = parts[1];
+                    memoryMap.put(part1, part2);
+                } else {
+                    System.err.println("Invalid line in IPL.txt: " + line);
+                }
+            }
+            return true;
+        } catch (IOException e) {
+            System.out.println("IPL File not found");
+            return false;
+        }
+
+    }
+    public static boolean loadMemory(File file) {
+
+        String currentDirectory = System.getProperty("user.dir");
+        Path filePath = Paths.get(currentDirectory + "/IPL.txt");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
 
             while ((line = reader.readLine()) != null) {
