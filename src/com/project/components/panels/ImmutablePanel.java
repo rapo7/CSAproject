@@ -6,6 +6,10 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+/**
+ * This panel is Immutable panel meaning user can't change registers in this panel
+ * contains IR and MFR (not working for now
+ */
 public class ImmutablePanel extends JPanel {
     int padding = 10;
     Border paddingBorder = BorderFactory.createEmptyBorder(padding, padding, padding, padding);

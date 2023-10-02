@@ -6,6 +6,10 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 
+/**
+ * This is the class where every component comes together
+ * has layout manager to manage the layout and colors to make it look good
+ */
 public class MainScreen extends JFrame {
 
     Color primaryColor = new Color(129, 237, 183);  // Replace with your RGB values

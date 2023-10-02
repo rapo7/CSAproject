@@ -3,6 +3,11 @@ package com.project.commons;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class has all the logic to maintain Registers
+ * implements Singleton pattern
+ * Single Source of Truth for Registers GPR and IXR
+ */
 public class RegisterMap {
     private static RegisterMap instance = null;
     private static Map<String, String> regMap;

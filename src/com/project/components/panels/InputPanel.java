@@ -1,13 +1,14 @@
 package com.project.components.panels;
 
-import com.project.commons.Memory;
 import com.project.components.HexTextField;
-import com.project.utils.HexParser;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+/**
+ * This panel takes input and can be loaded to register of choice from this panel
+ */
 public class InputPanel extends JPanel {
     int padding = 10;
     Border paddingBorder = BorderFactory.createEmptyBorder(padding, padding, padding, padding);

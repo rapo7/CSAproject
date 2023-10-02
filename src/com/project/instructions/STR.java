@@ -3,6 +3,9 @@ package com.project.instructions;
 import com.project.commons.Memory;
 import com.project.commons.RegisterMap;
 
+/**
+ * Store the register to memory
+ */
 public class STR {
     static RegisterMap regmap = RegisterMap.getInstance();
 

@@ -10,6 +10,9 @@ import java.util.Map;
 
 import com.project.utils.HexParser;
 
+/**
+ * Uses Singleton pattern to implement memory as a hashmap
+ */
 public class Memory {
     private static Memory instance = null;
     private static Map<String, String> memoryMap;
@@ -43,7 +46,7 @@ public class Memory {
         System.out.println("Memory -- location" + address + "set to --" + value);
     }
 
-
+    // load memory using the IPL.txt file from the current Directory
     public static boolean loadMemory() {
 
         String currentDirectory = System.getProperty("user.dir");

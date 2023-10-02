@@ -5,6 +5,7 @@ import com.project.commons.RegisterMap;
 
 /**
  * This class has getEA method
+ * which calculates the Effective address based on IX , Indirect BIt and Address
  */
 public class EffectiveAddress {
     private static RegisterMap regmap = RegisterMap.getInstance();

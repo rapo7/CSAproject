@@ -8,7 +8,9 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-
+/**
+ * This class has all the UI and logic for the IXR Panel component and the registers
+ */
 public class IXRPanel extends JPanel {
     int padding = 10;
     private Border paddingBorder = BorderFactory.createEmptyBorder(padding, padding, padding, padding);

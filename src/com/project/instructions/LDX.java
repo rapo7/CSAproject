@@ -5,6 +5,9 @@ import com.project.commons.RegisterMap;
 import com.project.components.panels.IXRPanel;
 
 
+/**
+ * Load Index Register with memory
+ */
 public class LDX {
     static RegisterMap regmap = RegisterMap.getInstance();
 

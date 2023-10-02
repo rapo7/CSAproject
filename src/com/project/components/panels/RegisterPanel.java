@@ -8,6 +8,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+/**
+ * This is the class that contains MAR, MBR and PC
+ */
 public class RegisterPanel extends JPanel {
     int padding = 10;
     Border paddingBorder = BorderFactory.createEmptyBorder(padding, padding, padding, padding);
@@ -33,10 +36,9 @@ public class RegisterPanel extends JPanel {
     }
 
 
-
-
-
-
+    /**
+     * this method will increment PC and set values of MAR and MBR and IR
+     */
     public static void incrementPC() {
         int marVal = Integer.parseInt(pc.getText(), 16);
         String newPC = HexParser.inttoHexString(marVal + 1 , 3);

@@ -3,7 +3,9 @@ package com.project.instructions;
 import com.project.commons.Memory;
 import com.project.utils.EffectiveAddress;
 
-
+/**
+ * This class has all the code to parse and execute instruction base don opcode
+ */
 public class InstructionParser {
     static Memory memory = Memory.getInstance();
 

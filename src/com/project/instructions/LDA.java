@@ -4,6 +4,9 @@ import com.project.commons.RegisterMap;
 import com.project.components.panels.GPRPanel;
 
 
+/**
+ * The logic for load register with address
+ */
 public class LDA {
     static RegisterMap regmap = RegisterMap.getInstance();
 

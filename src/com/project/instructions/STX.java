@@ -3,6 +3,9 @@ package com.project.instructions;
 import com.project.commons.Memory;
 import com.project.commons.RegisterMap;
 
+/**
+ * Store the Index Register to memory
+ */
 public class STX {
     static RegisterMap regmap = RegisterMap.getInstance();
 

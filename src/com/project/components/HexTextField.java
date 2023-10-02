@@ -9,6 +9,9 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JTextField;
 
+/**
+ * Hex Input validator only allows Hex characters for the input
+ */
 public class HexTextField extends JTextField {
     private final int maxLength; // Maximum length allowed for the text field
 

@@ -1,5 +1,8 @@
 package com.project.utils;
 
+/**
+ * This class has the utilities to convert Hex to binary and vice versa
+ */
 public class HexParser {
     public static int hexStringToInt(String hexString) {
         // Parse the hexadecimal string to an integer

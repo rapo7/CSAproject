@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 
 
+/**
+ * logic for the popup that is being shown ;when we load memory / pressed the Init Button
+ */
 public class PopupHandler {
     private final JFrame parentFrame;
     private JDialog progressDialog;

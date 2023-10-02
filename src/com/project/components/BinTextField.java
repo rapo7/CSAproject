@@ -4,6 +4,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
 
+/**
+ * Binary Input validator only allows 0 or 1
+ */
 public class BinTextField extends JTextField {
     private final int maxLength; // Maximum length allowed for the text field
 

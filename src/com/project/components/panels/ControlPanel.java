@@ -11,6 +11,9 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseListener;
 
+/**
+ * The ControlPanel Class has all the buttons necessary to control the machine
+ */
 public class ControlPanel extends JPanel {
     Border paddingBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
     // Checkboxes for HAlt and Run
@@ -23,6 +26,7 @@ public class ControlPanel extends JPanel {
     static JTextField addressTextField = new BinTextField(5);
     static  JButton stPlusButton = new JButton("St+");
     static Memory memory = Memory.getInstance();
+
 
     public static void setHalt(boolean x) {
         if (!x) {
@@ -141,6 +145,7 @@ public class ControlPanel extends JPanel {
             memory.setValue(curMar, RegisterPanel.getMBR());
             RegisterPanel.setMAR(HexParser.inttoHexString(Integer.parseInt(curMar, 16)+ 1, 3));
         });
+
         // Add components to the bottom panel
         this.add(storeButton);
         this.add(stPlusButton);
