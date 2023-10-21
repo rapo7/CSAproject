@@ -19,8 +19,8 @@ public class PopupHandler {
         this.parentFrame = parentFrame;
     }
 
-    public void showPopup() {
-        progressDialog = new JDialog(parentFrame, "IPL file Loading", true);
+    public void showPopup(String ActionString, String successString, String failureString, Boolean condition) {
+        progressDialog = new JDialog(parentFrame, ActionString, true);
         progressDialog.setSize(300, 100);
         progressDialog.setLayout(new BorderLayout());
 
@@ -28,7 +28,7 @@ public class PopupHandler {
         progressBar.setStringPainted(true);
 
         // Start the progress bar when the dialog is created
-        startProgressBar();
+        startProgressBar(successString, failureString, condition);
 
         progressDialog.add(progressBar, BorderLayout.CENTER);
 
@@ -37,7 +37,7 @@ public class PopupHandler {
         progressDialog.setVisible(true);
     }
 
-    private void startProgressBar() {
+    private void startProgressBar(String successString, String failureString, Boolean condition) {
         if (!isTaskRunning) {
             isTaskRunning = true;
 
@@ -61,16 +61,13 @@ public class PopupHandler {
                 @Override
                 protected void done() {
                     try {
-                        boolean condition = get();
-
                         if (condition) {
                             progressBar.setValue(100);
                             progressDialog.dispose();
-                            JOptionPane.showMessageDialog(parentFrame, "Memory is loaded with IPL Successfully",
-                                    "Success", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(parentFrame, successString, "Success", JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             progressDialog.dispose();
-                            JOptionPane.showMessageDialog(parentFrame, "Error occurred during loading memory",
+                            JOptionPane.showMessageDialog(parentFrame, failureString,
                                     "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     } catch (Exception ex) {

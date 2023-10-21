@@ -1,0 +1,169 @@
+package com.project.utils;
+
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+public class Assembler {
+
+    static Map<String, String> opcodeMap = new HashMap<>();
+    static Map<String, String> resMap = new HashMap<>();
+    static Map<String, String> symbolMap = new HashMap<>();
+    static int addressCounter = 0;
+
+    static {
+        opcodeMap.put("TRAP", "011110");
+        opcodeMap.put("LDR", "000001");
+        opcodeMap.put("STR", "000010");
+        opcodeMap.put("LDA", "000011");
+        opcodeMap.put("LDX", "101001");
+        opcodeMap.put("STX", "101010");
+        opcodeMap.put("JZ", "001010");
+        opcodeMap.put("JNE", "001011");
+        opcodeMap.put("JCC", "001100");
+        opcodeMap.put("JMA", "001101");
+        opcodeMap.put("JSR", "001110");
+        opcodeMap.put("RFS", "001111");
+        opcodeMap.put("JGE", "010001");
+        opcodeMap.put("AMR", "000100");
+        opcodeMap.put("SMR", "000101");
+        opcodeMap.put("AIR", "000110");
+        opcodeMap.put("SIR", "000111");
+        opcodeMap.put("MLT", "010100");
+        opcodeMap.put("DVD", "010101");
+        opcodeMap.put("TRR", "010110");
+        opcodeMap.put("AND", "010111");
+        opcodeMap.put("ORR", "011000");
+        opcodeMap.put("NOT", "011001");
+        opcodeMap.put("SRC", "011111");
+        opcodeMap.put("RRC", "100000");
+        opcodeMap.put("IN", "111101");
+        opcodeMap.put("OUT", "111110");
+        opcodeMap.put("CHK", "111111");
+        opcodeMap.put("FADD", "100001");
+        opcodeMap.put("FSUB", "100010");
+        opcodeMap.put("VADD", "100011");
+        opcodeMap.put("VSUB", "100100");
+        opcodeMap.put("CNVRT", "100101");
+        opcodeMap.put("LDFR", "110010");
+        opcodeMap.put("STFR", "110011");
+    }
+
+
+    static String csParse(String[] csv) {
+        if (csv.length == 2) {
+            return "00" + HexParser.intstrtoBin(csv[0], 2) + "0" + HexParser.intstrtoBin(csv[1], 5);
+        } else if (csv.length == 3) {
+            return HexParser.intstrtoBin(csv[0], 2) + HexParser.intstrtoBin(csv[1], 2) + "0" + HexParser.intstrtoBin(csv[2], 5);
+        } else if (csv.length == 4) {
+            return HexParser.intstrtoBin(csv[0], 2) + HexParser.intstrtoBin(csv[1], 2) + "1" + HexParser.intstrtoBin(csv[2], 5);
+        }
+        return null;
+    }
+
+    private static boolean handleLabelDefinition(String[] parts) {
+        String label = parts[0].substring(0, parts[0].length() - 1);
+        symbolMap.put(label, HexParser.inttoHexString(addressCounter, 4));
+
+        if (parts.length > 1) {
+            String[] partsnew = Arrays.copyOfRange(parts, 1, parts.length);
+            return handleInstruction(partsnew);
+        }
+        System.out.println("Invalid Instruction file");
+        return true;
+    }
+
+    private static boolean handleInstruction(String[] parts) {
+        String opcode = parts[0].toUpperCase();
+
+        if (opcodeMap.containsKey(opcode)) {
+            String binVal = opcodeMap.get(opcode) + csParse(parts[1].split(","));
+            String hexVal = HexParser.binaryToHex(binVal, 4);
+            resMap.put(HexParser.inttoHexString(addressCounter, 4), hexVal);
+            addressCounter++;
+        } else if (parts[0].equalsIgnoreCase("HLT")) {
+            System.out.println(addressCounter);
+            resMap.put(HexParser.inttoHexString(addressCounter, 4), "0000");
+            return false;
+        } else if (parts[0].equalsIgnoreCase("LOC")) {
+            addressCounter = Integer.parseInt(parts[1]);
+        } else if (parts[0].equalsIgnoreCase("Data")) {
+            handleData(parts);
+        } else {
+            System.out.println("Invalid Input file");
+        }
+        return true;
+    }
+
+    private static void handleData(String[] parts) {
+        int data;
+        try {
+            data = Integer.parseInt(parts[1]);
+            resMap.put(HexParser.inttoHexString(addressCounter, 4), HexParser.inttoHexString(data, 4));
+        } catch (NumberFormatException e) {
+            resMap.put(parts[1], HexParser.inttoHexString(addressCounter, 4));
+        } finally {
+            addressCounter++;
+        }
+    }
+
+    public static void assembleFromFile(File file) throws IOException {
+
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                if (line.startsWith(";")) {
+                    continue;
+                }
+
+                String[] parts = line.split(" ");
+                if (parts.length < 2) {
+                    continue; // Skip lines with less than 2 parts
+                }
+
+                if (parts[0].contains(":")) {
+                    handleLabelDefinition(parts);
+                } else {
+                    handleInstruction(parts);
+                }
+            }
+
+            for (Map.Entry<String, String> me : symbolMap.entrySet()) {
+                if (resMap.containsKey(me.getKey())) {
+                    String address = resMap.get(me.getKey());
+                    resMap.remove(me.getKey());
+                    resMap.put(address, me.getValue());
+                } else {
+                    System.out.println("Cannot Resolve Symbol" + me.getKey());
+                }
+            }
+            String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            String fileName = "output_" + timestamp + ".txt";
+            String filePath = "./" + fileName;  // "./" specifies the current directory.
+
+            BufferedWriter writer = null;
+            try {
+                // Create a BufferedWriter to write to the file.
+                writer = new BufferedWriter(new FileWriter(filePath));
+
+                for (Map.Entry<String, String> entry : resMap.entrySet()) {
+                    String newline = entry.getKey() + " " + entry.getValue();
+                    writer.write(newline);
+                    writer.newLine(); // Add a newline character to separate lines.
+                }
+
+                // Close the writer to ensure the data is flushed and the file is properly saved.
+
+                System.out.println("Lines have been written to " + filePath);
+            } catch (IOException e) {
+                System.err.println("An error occurred: " + e.getMessage());
+                e.printStackTrace();
+            } finally {
+                assert writer != null;
+                writer.close();
+            }
+        }
+    }
+}

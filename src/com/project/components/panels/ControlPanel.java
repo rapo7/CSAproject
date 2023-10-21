@@ -1,5 +1,6 @@
 package com.project.components.panels;
 
+import com.project.utils.Assembler;
 import com.project.commons.Memory;
 import com.project.components.BinTextField;
 import com.project.components.PopupHandler;
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * The ControlPanel Class has all the buttons necessary to control the machine
@@ -76,46 +78,18 @@ public class ControlPanel extends JPanel {
         him.put(KeyStroke.getKeyStroke("released SPACE"), "none");
 
 
-        // Add components to the bottom panel
-        // TODO Operation Field
-//        this.add(new JLabel("Operation"));
-//        this.add(operationText);
-//
-//
-//        //GPR field
-//        this.add(new JLabel("GPR"));
-//        this.add(gprTextField);
-//
-//        //IXR Field
-//        this.add(new JLabel("IXR"));
-//        this.add(ixrTextField);
-//
-//        //I Field
-//        this.add(new JLabel("I"));
-//        this.add(iTextField);
-//
-//        //Address Field
-//        this.add(new JLabel("Address"));
-//        this.add(addressTextField);
-
 
         // Buttons for control
         JButton storeButton = new JButton("Store");
 //        JButton stPlusButton = new JButton("St+");
         JButton loadButton = new JButton("Load");
-        JButton initButton = new JButton("init");
-        initButton.setBackground(Color.RED);
-        PopupHandler popup = new PopupHandler(frame);
 
-        this.add(initButton);
-        initButton.addActionListener(ae -> popup.showPopup());
 
         JButton initCustomButton = new JButton("init Custom");
-        initButton.setBackground(Color.BLUE);
+        initCustomButton.setBackground(Color.RED);
         PopupHandler popupfile = new PopupHandler(frame);
 
-        this.add(initButton);
-        this.add(initCustomButton);
+
         initCustomButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -127,14 +101,44 @@ public class ControlPanel extends JPanel {
                 // Check if a file was selected
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
-                    Memory.loadMemory(selectedFile);
-                    popupfile.showPopup();
+                    Boolean isMemLoaded = Memory.loadMemory(selectedFile);
+                    popupfile.showPopup("IPL file Loading", "Memory is loaded with IPL Successfully",
+                            "Error Occured in loading memory", isMemLoaded);
                 } else {
-                    Memory.loadMemory();
+                    System.out.println("error loading file");
                 }
             }
         });
+        JButton assembleButton = new JButton("Assemble");
+        assembleButton.setBackground(Color.BLUE);
+        PopupHandler assembleFile = new PopupHandler(frame);
 
+        assembleButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+
+            // Show the file chooser dialog
+            int returnValue = fileChooser.showOpenDialog(frame);
+
+            // Check if a file was selected
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                Boolean isAssembled = null;
+                try {
+                     Assembler.assembleFromFile(selectedFile);
+                     isAssembled= true;
+                } catch (IOException ex) {
+                    isAssembled = false;
+                }
+                assembleFile.showPopup("Loading Assembler file", "File Assembled Sucessfully", "Invalid Input file", isAssembled);
+            } else {
+                JOptionPane.showMessageDialog(frame, "No file Selected",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+
+        this.add(initCustomButton);
+        this.add(assembleButton);
 
         // Text field for SS
         JButton ssButton = new JButton("SS");
@@ -175,7 +179,6 @@ public class ControlPanel extends JPanel {
         this.add(storeButton);
         this.add(stPlusButton);
         this.add(loadButton);
-        this.add(initButton);
         this.add(runButton);
         this.add(haltCheckBox);
         this.add(runCheckBox);

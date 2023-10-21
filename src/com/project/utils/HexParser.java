@@ -34,13 +34,18 @@ public class HexParser {
         }
         return false;
     }
-    public static String binaryToHex(String binary) {
+    public static String binaryToHex(String binary, int desiredLength) {
         int decimalValue = Integer.parseInt(binary, 2);
-        return Integer.toHexString(decimalValue).toUpperCase();
+        String input = Integer.toHexString(decimalValue).toUpperCase();
+        return String.format("%" + desiredLength + "s", input).replace(' ', '0');
     }
     public static String hexToBinary(String hex) {
         int decimalValue = Integer.parseInt(hex, 16);
         return Integer.toBinaryString(decimalValue);
+    }
+    public static String intstrtoBin(String x, int desiredLength){
+        String input = Integer.toBinaryString(Integer.parseInt(x));
+        return String.format("%" + desiredLength + "s", input).replace(' ', '0');
     }
 
 
