@@ -1,7 +1,6 @@
 # csci6461CSA
 The project that has to be done as a part of CSCI6461 Computer System Architecture
 
-- Init Button Loads IPL.txt to memory 
-- Run button for now runs 1 instruction
-- PC is inccrementing when we click run
-- MAR give one address and press Load MBR will be loaded with value at MAR address
+- On clicking `assemble` button and upon choosing a file
+- The assembler wil assemble the file and generate a `output-{timestamp}.txt` file
+- which has key and value pairs "Address and Value" 
