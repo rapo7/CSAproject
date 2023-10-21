@@ -148,13 +148,14 @@ public class Assembler {
                 // Create a BufferedWriter to write to the file.
                 writer = new BufferedWriter(new FileWriter(filePath));
 
-                for (Map.Entry<String, String> entry : resMap.entrySet()) {
-                    String newline = entry.getKey() + " " + entry.getValue();
-                    writer.write(newline);
-                    writer.newLine(); // Add a newline character to separate lines.
-                }
+                List<String> keysList = new ArrayList<>(resMap.keySet());
+                Collections.sort(keysList);
 
-                // Close the writer to ensure the data is flushed and the file is properly saved.
+                for (String key : keysList) {
+                    String newline = key + " " + resMap.get(key);
+                    writer.write(newline);
+                    writer.newLine();
+                }
 
                 System.out.println("Lines have been written to " + filePath);
             } catch (IOException e) {
