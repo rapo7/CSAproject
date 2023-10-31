@@ -11,6 +11,31 @@ public class Assembler {
     static Map<String, String> symbolMap = new HashMap<>();
     static int addressCounter = 0;
 
+    static Set<String> arithmeticOps = new HashSet<>();
+    static Set<String> shiftRotateOps = new HashSet<>();
+    static Set<String> ioOps = new HashSet<>();
+
+    static Set<String> lenOneOps = new HashSet<>();
+
+
+    static {
+        arithmeticOps.add("MLT");
+        arithmeticOps.add("DVD");
+        arithmeticOps.add("TRR");
+        arithmeticOps.add("AND");
+        arithmeticOps.add("ORR");
+        shiftRotateOps.add("SRC");
+        shiftRotateOps.add("RRC");
+        ioOps.add("IN");
+        ioOps.add("OUT");
+        ioOps.add("CHK");
+        lenOneOps.add("HLT");
+        lenOneOps.add("NOT");
+        lenOneOps.add("RFS");
+
+    }
+
+
     static {
         opcodeMap.put("TRAP", "011110");
         opcodeMap.put("LDR", "000001");
@@ -50,41 +75,51 @@ public class Assembler {
     }
 
 
-    static String csParse(String[] csv) {
-        if (csv.length == 2) {
+    static String csParse(String opcode, String[] csv) {
+        if (csv.length == 1) {
+            if (opcode.equals("NOT"))
+                return HexParser.intstrtoBin(csv[0], 2) + "00000000";
+            else if (opcode.equals("RFS"))
+                return "00000" + HexParser.intstrtoBin(csv[0], 5);
+
+        } else if (csv.length == 2) {
+            if (ioOps.contains(opcode))
+                return HexParser.intstrtoBin(csv[0], 2) + "00" + "0" + HexParser.intstrtoBin(csv[1], 5);
+            else if (arithmeticOps.contains(opcode))
+                return HexParser.intstrtoBin(csv[0], 2) + HexParser.intstrtoBin(csv[1], 2) + "000000";
             return "00" + HexParser.intstrtoBin(csv[0], 2) + "0" + HexParser.intstrtoBin(csv[1], 5);
         } else if (csv.length == 3) {
             return HexParser.intstrtoBin(csv[0], 2) + HexParser.intstrtoBin(csv[1], 2) + "0" + HexParser.intstrtoBin(csv[2], 5);
         } else if (csv.length == 4) {
+            if (shiftRotateOps.contains(opcode))
+                return HexParser.intstrtoBin(csv[0], 2) + HexParser.intstrtoBin(csv[3], 2) + HexParser.intstrtoBin(csv[2], 2) + "00" + HexParser.intstrtoBin(csv[1], 5);
             return HexParser.intstrtoBin(csv[0], 2) + HexParser.intstrtoBin(csv[1], 2) + "1" + HexParser.intstrtoBin(csv[2], 5);
         }
         return null;
     }
 
-    private static boolean handleLabelDefinition(String[] parts) {
+    private static void handleLabelDefinition(String[] parts) {
         String label = parts[0].substring(0, parts[0].length() - 1);
         symbolMap.put(label, HexParser.inttoHexString(addressCounter, 4));
-
-        if (parts.length > 1) {
+        if (parts.length >= 1) {
             String[] partsnew = Arrays.copyOfRange(parts, 1, parts.length);
-            return handleInstruction(partsnew);
+            handleInstruction(partsnew);
+        } else {
+            System.out.println("Invalid Instruction file");
         }
-        System.out.println("Invalid Instruction file");
-        return true;
     }
 
-    private static boolean handleInstruction(String[] parts) {
+    private static void handleInstruction(String[] parts) {
         String opcode = parts[0].toUpperCase();
 
         if (opcodeMap.containsKey(opcode)) {
-            String binVal = opcodeMap.get(opcode) + csParse(parts[1].split(","));
+            String binVal = opcodeMap.get(opcode) + csParse(opcode, parts[1].split(","));
             String hexVal = HexParser.binaryToHex(binVal, 4);
             resMap.put(HexParser.inttoHexString(addressCounter, 4), hexVal);
             addressCounter++;
         } else if (parts[0].equalsIgnoreCase("HLT")) {
             System.out.println(addressCounter);
             resMap.put(HexParser.inttoHexString(addressCounter, 4), "0000");
-            return false;
         } else if (parts[0].equalsIgnoreCase("LOC")) {
             addressCounter = Integer.parseInt(parts[1]);
         } else if (parts[0].equalsIgnoreCase("Data")) {
@@ -92,7 +127,6 @@ public class Assembler {
         } else {
             System.out.println("Invalid Input file");
         }
-        return true;
     }
 
     private static void handleData(String[] parts) {
