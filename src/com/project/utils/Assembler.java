@@ -37,41 +37,41 @@ public class Assembler {
 
 
     static {
-        opcodeMap.put("TRAP", "011110");
+        opcodeMap.put("TRAP", "011000");
         opcodeMap.put("LDR", "000001");
         opcodeMap.put("STR", "000010");
         opcodeMap.put("LDA", "000011");
-        opcodeMap.put("LDX", "101001");
-        opcodeMap.put("STX", "101010");
-        opcodeMap.put("JZ", "001010");
-        opcodeMap.put("JNE", "001011");
-        opcodeMap.put("JCC", "001100");
-        opcodeMap.put("JMA", "001101");
-        opcodeMap.put("JSR", "001110");
-        opcodeMap.put("RFS", "001111");
-        opcodeMap.put("JGE", "010001");
+        opcodeMap.put("LDX", "100001");
+        opcodeMap.put("STX", "100010");
+        opcodeMap.put("JZ", "001000");
+        opcodeMap.put("JNE", "001001");
+        opcodeMap.put("JCC", "001010");
+        opcodeMap.put("JMA", "001011");
+        opcodeMap.put("JSR", "001100");
+        opcodeMap.put("RFS", "001101");
+        opcodeMap.put("JGE", "001111");
         opcodeMap.put("AMR", "000100");
         opcodeMap.put("SMR", "000101");
         opcodeMap.put("AIR", "000110");
         opcodeMap.put("SIR", "000111");
-        opcodeMap.put("MLT", "010100");
-        opcodeMap.put("DVD", "010101");
-        opcodeMap.put("TRR", "010110");
-        opcodeMap.put("AND", "010111");
-        opcodeMap.put("ORR", "011000");
-        opcodeMap.put("NOT", "011001");
+        opcodeMap.put("MLT", "010000");
+        opcodeMap.put("DVD", "010001");
+        opcodeMap.put("TRR", "010010");
+        opcodeMap.put("AND", "010011");
+        opcodeMap.put("ORR", "010100");
+        opcodeMap.put("NOT", "010101");
         opcodeMap.put("SRC", "011111");
         opcodeMap.put("RRC", "100000");
-        opcodeMap.put("IN", "111101");
-        opcodeMap.put("OUT", "111110");
-        opcodeMap.put("CHK", "111111");
+        opcodeMap.put("IN", "110101");
+        opcodeMap.put("OUT", "110110");
+        opcodeMap.put("CHK", "110111");
         opcodeMap.put("FADD", "100001");
         opcodeMap.put("FSUB", "100010");
         opcodeMap.put("VADD", "100011");
         opcodeMap.put("VSUB", "100100");
         opcodeMap.put("CNVRT", "100101");
-        opcodeMap.put("LDFR", "110010");
-        opcodeMap.put("STFR", "110011");
+        opcodeMap.put("LDFR", "101000");
+        opcodeMap.put("STFR", "101001");
     }
 
 
@@ -98,6 +98,13 @@ public class Assembler {
         return null;
     }
 
+    //
+
+    /**
+     * This will take the instruction with Label and handles the label and  passes instruction to Instruction-handler
+     *
+     * @param parts
+     */
     private static void handleLabelDefinition(String[] parts) {
         String label = parts[0].substring(0, parts[0].length() - 1);
         symbolMap.put(label, HexParser.inttoHexString(addressCounter, 4));
@@ -109,6 +116,11 @@ public class Assembler {
         }
     }
 
+    /**
+     * This function takes parts of the instruction as arguments an d parses the instruction based on the length of the parts array
+     *
+     * @param parts
+     */
     private static void handleInstruction(String[] parts) {
         String opcode = parts[0].toUpperCase();
 
@@ -129,6 +141,11 @@ public class Assembler {
         }
     }
 
+    /**
+     * This takes the parts array and handles the DATA instructions
+     *
+     * @param parts
+     */
     private static void handleData(String[] parts) {
         int data;
         try {
@@ -148,6 +165,7 @@ public class Assembler {
             String line;
 
             while ((line = br.readLine()) != null) {
+                //ignore comments (lines that that start with a ';'
                 if (line.startsWith(";")) {
                     continue;
                 }
