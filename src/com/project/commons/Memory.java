@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.project.components.panels.ControlPanel;
 import com.project.utils.HexParser;
 
 import javax.swing.*;
@@ -35,10 +36,11 @@ public class Memory {
     // Methods to read and write to registerMap
     public String getValue(String address) {
         String address4 = (address.length() == 4) ? address : "0" + address;
-        if (memoryMap.containsKey(address)) {
+        if (memoryMap.containsKey(address4)) {
             return memoryMap.get(address4);
         } else {
             System.err.println("Invalid memory access");
+            ControlPanel.setHalt(true);
             return "0000";
         }
     }
@@ -51,9 +53,6 @@ public class Memory {
 
     // load memory using the IPL.txt file from the current Directory
     public static boolean loadMemory(File file) {
-
-        String currentDirectory = System.getProperty("user.dir");
-        Path filePath = Paths.get(currentDirectory + "/IPL.txt");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;

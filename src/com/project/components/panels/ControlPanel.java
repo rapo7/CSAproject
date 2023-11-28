@@ -24,11 +24,7 @@ public class ControlPanel extends JPanel {
     // Checkboxes for HAlt and Run
     static JCheckBox haltCheckBox = new JCheckBox("Halt");
     static JCheckBox runCheckBox = new JCheckBox("Run");
-    static JTextField operationText = new BinTextField(6);
-    static JTextField gprTextField = new BinTextField(2);
-    static JTextField ixrTextField = new BinTextField(2);
-    static JTextField iTextField = new BinTextField(1);
-    static JTextField addressTextField = new BinTextField(5);
+    static JCheckBox overflowCheckBox = new JCheckBox("Overflow");
     static JButton stPlusButton = new JButton("St+");
     static Memory memory = Memory.getInstance();
 
@@ -53,6 +49,7 @@ public class ControlPanel extends JPanel {
         }
     }
 
+
     MouseListener[] ml = runCheckBox.getListeners(MouseListener.class);
     MouseListener[] hml = haltCheckBox.getListeners(MouseListener.class);
 
@@ -76,7 +73,6 @@ public class ControlPanel extends JPanel {
         InputMap him = haltCheckBox.getInputMap();
         him.put(KeyStroke.getKeyStroke("SPACE"), "none");
         him.put(KeyStroke.getKeyStroke("released SPACE"), "none");
-
 
 
         // Buttons for control
@@ -124,8 +120,8 @@ public class ControlPanel extends JPanel {
                 File selectedFile = fileChooser.getSelectedFile();
                 Boolean isAssembled = null;
                 try {
-                     Assembler.assembleFromFile(selectedFile);
-                     isAssembled= true;
+                    Assembler.assembleFromFile(selectedFile);
+                    isAssembled = true;
                 } catch (IOException ex) {
                     isAssembled = false;
                 }

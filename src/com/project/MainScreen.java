@@ -17,6 +17,7 @@ public class MainScreen extends JFrame {
     Color accentColor = new Color(245, 222, 179);
     Color paleYellowColor = new Color(255, 255, 204);
     Color pink = new Color(233, 166, 253);
+    Color violet = new Color(167, 166, 253);
 
 
 
@@ -80,6 +81,11 @@ public class MainScreen extends JFrame {
         gbc.gridx = 1;
         gbc.gridy = 2;
         mainPanel.add(inputPanel, gbc);
+
+        JPanel flagPanel = new FlagPanel(violet);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        mainPanel.add(flagPanel, gbc);
 
 
 
