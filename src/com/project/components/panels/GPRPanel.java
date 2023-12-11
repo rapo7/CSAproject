@@ -2,6 +2,7 @@ package com.project.components.panels;
 
 import com.project.commons.RegisterMap;
 import com.project.components.HexTextField;
+import com.project.utils.HexParser;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -29,10 +30,7 @@ public class GPRPanel extends JPanel {
     private static final RegisterMap regmap = RegisterMap.getInstance();
 
 
-    public static void setGpr0textField(String text) {
-
-        gpr0textField.setText(text);
-    }
+    public static void setGpr0textField(String text) {gpr0textField.setText(text); }
 
 
     public static void setGpr1textField(String text) {
@@ -66,8 +64,8 @@ public class GPRPanel extends JPanel {
 
         gpr0btn.addActionListener(ae -> {
             String regInput = InputPanel.getRegisterInput();
-            regmap.setValue("GPR0", regInput);
-            gpr0textField.setText(regInput);
+            regmap.setValue("GPR0", (short) HexParser.hexStringToInt(regInput));
+            gpr0textField.setText(regInput.toUpperCase());
         });
 
 
@@ -78,8 +76,8 @@ public class GPRPanel extends JPanel {
 
         gpr1btn.addActionListener(ae -> {
             String regInput = InputPanel.getRegisterInput();
-            regmap.setValue("GPR1", regInput);
-            gpr1textField.setText(regInput);
+            regmap.setValue("GPR1", (short) HexParser.hexStringToInt(regInput));
+            gpr1textField.setText(regInput.toUpperCase());
         });
         this.add(gpr1label);
         this.add(gpr1textField);
@@ -88,8 +86,8 @@ public class GPRPanel extends JPanel {
 
         gpr2btn.addActionListener(ae -> {
             String regInput = InputPanel.getRegisterInput();
-            regmap.setValue("GPR2", regInput);
-            gpr2textField.setText(regInput);
+            regmap.setValue("GPR2", (short) HexParser.hexStringToInt(regInput));
+            gpr2textField.setText(regInput.toUpperCase());
         });
         this.add(gpr2label);
         this.add(gpr2textField);
@@ -98,8 +96,8 @@ public class GPRPanel extends JPanel {
 
         gpr3btn.addActionListener(ae -> {
             String regInput = InputPanel.getRegisterInput();
-            regmap.setValue("GPR3", regInput);
-            gpr3textField.setText(regInput);
+            regmap.setValue("GPR3", (short) HexParser.hexStringToInt(regInput));
+            gpr3textField.setText(regInput.toUpperCase());
         });
         this.add(gpr3label);
         this.add(gpr3textField);

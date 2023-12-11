@@ -35,6 +35,13 @@ public class RegisterPanel extends JPanel {
         mar.setText(text);
     }
 
+    public static void setPC(String text){
+        pc.setText(text);
+    }
+    public  static String getPC(){
+        return pc.getText();
+    }
+
 
     /**
      * this method will increment PC and set values of MAR and MBR and IR

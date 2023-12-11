@@ -10,11 +10,11 @@ public class TRR {
     public static void execute(String rx, String ry) {
         String rxKey = regmap.getKey(rx);
         String ryKey = regmap.getKey(ry);
-        String rxVal = regmap.getValue(rxKey);
-        String ryVal = regmap.getValue(ryKey);
+        short rxVal = regmap.getValue(rxKey);
+        short ryVal = regmap.getValue(ryKey);
 
-        if (rxVal.equals(ryVal)) {
-                FlagPanel.setDivZero(true);
+        if (rxVal == ryVal) {
+            FlagPanel.setDivZero(true);
         }
     }
 

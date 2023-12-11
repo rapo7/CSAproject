@@ -11,8 +11,8 @@ public class DVD {
         String rxKey = regmap.getKey(rx);
         int rxint = Integer.parseInt(rx, 2);
         String ryKey = regmap.getKey(ry);
-        int rxVal = Integer.parseInt(regmap.getValue(rxKey), 16);
-        int ryVal = Integer.parseInt(regmap.getValue(ryKey), 16);
+        short rxVal = regmap.getValue(rxKey);
+        short  ryVal = regmap.getValue(ryKey);
         String rxKeyPlusOne = regmap.getKey(String.format("%02d", Integer.parseInt(Integer.toBinaryString(rxint + 1))));
 
         if ((rx.equals("00") || rx.equals("10")) && (ry.equals("00") || ry.equals("10"))) {
@@ -25,8 +25,8 @@ public class DVD {
             int quo = rxVal / ryVal;
             int rem = rxVal % ryVal;
 
-            regmap.setValue(rxKey, HexParser.inttoHexString(quo, 4));
-            regmap.setValue(rxKeyPlusOne, HexParser.inttoHexString(rem, 4));
+            regmap.setValue(rxKey, (short) quo);
+            regmap.setValue(rxKeyPlusOne, (short) rem);
         }
 
 

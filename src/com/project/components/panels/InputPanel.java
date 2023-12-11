@@ -16,12 +16,28 @@ public class InputPanel extends JPanel {
     static JTextField RegisterInput = new HexTextField(4);
 
 
-    public static String getAddressInput(){
-        return AddressInput.getText();
+    public static String getAddressInput() {
+        String address = AddressInput.getText();
+
+        // Check if the address has less than three characters
+        if (address.length() < 3) {
+            // Pad '0' to the left until the length is at least three
+            address = String.format("%0" + (3 - address.length()) + "d%s", 0, address);
+        }
+
+        return address;
     }
-    public static String getRegisterInput(){
-        return RegisterInput.getText();
+    public static String getRegisterInput() {
+        String reg = RegisterInput.getText();
+        // Check if the address has less than three characters
+        if (reg.length() < 4) {
+            // Pad '0' to the left until the length is at least three
+            reg = String.format("%0" + (4 - reg.length()) + "d%s", 0, reg);
+        }
+
+        return reg;
     }
+
 
     public InputPanel() {
 
@@ -39,7 +55,6 @@ public class InputPanel extends JPanel {
         this.add(new JLabel("Register Input "));
         RegisterInput.setText("0000");
         this.add(RegisterInput);
-
 
     }
 

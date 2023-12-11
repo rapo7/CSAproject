@@ -87,6 +87,12 @@ public class MainScreen extends JFrame {
         gbc.gridy = 2;
         mainPanel.add(flagPanel, gbc);
 
+        JPanel iopanel = new IOPanel();
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        mainPanel.add(iopanel, gbc);
+
+
 
 
 

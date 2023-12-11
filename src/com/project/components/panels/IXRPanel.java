@@ -33,19 +33,19 @@ public class IXRPanel extends JPanel {
 
 
     public static void setIxr1textField(String text) {
-        regmap.setValue("IXR1", text);
+        regmap.setValue("IXR1", Short.parseShort(text, 16));
         ixr1textField.setText(text);
     }
 
 
     public static void setIxr2textField(String text) {
-        regmap.setValue("IXR2", text);
+        regmap.setValue("IXR2", Short.parseShort(text));
         ixr2textField.setText(text);
     }
 
 
     public static void setIxr3textField(String text) {
-        regmap.setValue("IXR3", text);
+        regmap.setValue("IXR3", Short.parseShort(text));
         ixr3textField.setText(text);
     }
 
@@ -68,7 +68,7 @@ public class IXRPanel extends JPanel {
 
         ixr1btn.addActionListener(ae -> {
             String regInput = InputPanel.getRegisterInput();
-            regmap.setValue("IXR1", regInput);
+            regmap.setValue("IXR1", Short.parseShort(regInput));
             ixr1textField.setText(regInput);
         });
         this.add(ixr1label);
@@ -78,7 +78,7 @@ public class IXRPanel extends JPanel {
 
         ixr2btn.addActionListener(ae -> {
             String regInput = InputPanel.getRegisterInput();
-            regmap.setValue("IXR2", regInput);
+            regmap.setValue("IXR2", Short.parseShort(regInput));
             ixr2textField.setText(regInput);
         });
         this.add(ixr2label);
@@ -88,7 +88,7 @@ public class IXRPanel extends JPanel {
 
         ixr3btn.addActionListener(ae -> {
             String regInput = InputPanel.getRegisterInput();
-            regmap.setValue("IXR2", regInput);
+            regmap.setValue("IXR2", Short.parseShort(regInput));
             ixr2textField.setText(regInput);
         });
         this.add(ixr3label);

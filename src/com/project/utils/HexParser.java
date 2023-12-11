@@ -51,6 +51,10 @@ public class HexParser {
         String input = Integer.toBinaryString(Integer.parseInt(x));
         return String.format("%" + desiredLength + "s", input).replace(' ', '0');
     }
+    public static String inttoBin(int x, int desiredLength) {
+        String input = Integer.toBinaryString(x);
+        return String.format("%" + desiredLength + "s", input).replace(' ', '0');
+    }
 
 
 }

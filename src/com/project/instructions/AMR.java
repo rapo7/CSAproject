@@ -4,15 +4,13 @@ import com.project.commons.Memory;
 import com.project.commons.RegisterMap;
 import com.project.utils.HexParser;
 
-/**
- * Store the register to memory
- */
-public class STR {
+public class AMR {
     static RegisterMap regmap = RegisterMap.getInstance();
 
     public static void execute(Memory memory, String reg, String EA) {
         String regKey = regmap.getKey(reg);
         short regVal = regmap.getValue(regKey);
-        memory.setValue(EA, HexParser.inttoHexString(regVal));
+        short result = (short) (regVal + HexParser.hexStringToInt(memory.getValue(EA)));
+        regmap.setValue(regKey, result);
     }
 }
